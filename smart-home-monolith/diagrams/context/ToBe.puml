@@ -1,0 +1,55 @@
+@startuml
+!include C4_Context.puml
+
+title УМНЫЙ ДОМ
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Житель", "Пользователь системы")
+Container(srvs, "Сервисы") {
+    Component(vsrv, "Видео", "Сервис")
+    Component(hsrv, "Тепло", "Сервис")
+    Component(coll, "Коллектор", "Consumer")
+    Component(sys, "Система", "Сервис")
+}
+Container(infr, "Персист") {
+    Component(bd, "Состояния и настройки", "PostgreSQL")
+
+    Component(kf, "Шина событий", "KAFKA")
+}
+Component(gw, "Шлюз", "API GW")
+System_Ext(dt, "Датчики") {
+    Component(dt1, "Тепло", "Термодатчики")
+    Component(dt2, "Видео", "Видеокамеры")
+}
+System_Ext(tp, "Элементы управления") {
+    Component(tp1, "Доступ", "Ворота")
+    Component(tp2, "Видеонаблюдение", "Камеры")
+    Component(tp3, "Отопление", "Термопары")
+    Component(tp4, "Освещение", "Лампы")
+}
+
+
+Rel(kf, coll, "")
+Rel(coll, bd, "")
+Rel(dt1, gw, "Температура")
+Rel(dt2, gw, "Стрим")
+Rel(gw, hsrv, "Температура")
+Rel(gw, vsrv, "Стрим")
+Rel(hsrv, kf, "")
+Rel(vsrv, kf, "")
+Rel(user, gw, "Управление устройствами. Опрос датчиков")
+Rel(gw, tp4, "Вкл/Выкл")
+Rel(gw, tp3, "Вкл/Больше/Меньше")
+Rel(gw, tp2, "Поворот/Выкл")
+Rel(gw, tp1, "Открыть/Закрыть")
+Rel(gw, sys, "Управление, опрос")
+Rel(sys, bd, "")
+
+left footer
+1. Датчики отправляют показания как http клиенты.
+2. Элементы управления получают настройки как http сервисы.
+end footer
+@enduml

@@ -9,8 +9,7 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Person(user, "Житель", "Пользователь системы")
-System(sys, OTOP, \
-"Система управления нагревом")
+System(sys, OTOP, "Управление нагревом. Сбор данных.")
 
 System_Ext(dt1, "Датчик 1", "Термодатчик, кухня")
 System_Ext(dt2, "Датчик 2", "Термодатчик, гараж")
