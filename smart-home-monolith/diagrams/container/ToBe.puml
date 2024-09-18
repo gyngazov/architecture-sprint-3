@@ -1,5 +1,4 @@
 @startuml
-!include C4_Context.puml
 
 title УМНЫЙ ДОМ
 
@@ -12,7 +11,7 @@ Container(srvs, "Сервисы") {
     Component(vsrv, "Видео", "Сервис")
     Component(hsrv, "Тепло", "Сервис")
     Component(coll, "Коллектор", "Consumer")
-    Component(sys, "Система", "Сервис")
+    Component(sys, "Ядро", "Сервис")
 }
 Container(infr, "Персист") {
     Component(bd, "Состояния и настройки", "PostgreSQL")
@@ -49,7 +48,7 @@ Rel(gw, sys, "Управление, опрос")
 Rel(sys, bd, "")
 
 left footer
-1. Датчики отправляют показания как http клиенты.
+1. Датчики отправляют показания как http/udp клиенты.
 2. Элементы управления получают настройки как http сервисы.
 end footer
 @enduml
