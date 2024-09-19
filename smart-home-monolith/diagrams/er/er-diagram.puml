@@ -1,6 +1,7 @@
 @startuml
 title СУЩНОСТИ УМНОГО ДОМА
 'SHE 1.0 - smart house entities
+'см. entities.sql
 
 !define Table(name) class name as "name" << (T,#FFAAAA) >>
 'bold - primary key sql constraint
