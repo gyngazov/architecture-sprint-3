@@ -1,0 +1,62 @@
+@startuml
+title СУЩНОСТИ УМНОГО ДОМА
+'SHE 1.0 - smart house entities
+
+!define Table(name) class name as "name" << (T,#FFAAAA) >>
+'bold - primary key sql constraint
+!define primary(x) <b>x</b>
+'italic - unique key sql constraint
+!define unique(x) <i>x</i>
+'underlined - not null sql constraint
+!define nnull(x) <u>x</u>
+
+Table(user) {
+  primary(id) int
+  nnull(unique(login)) varchar[8]
+}
+
+Table(house) {
+  primary(id) int
+  nnull(user_id) int
+  nnull(unique(name)) varchar[16]
+  user_id foreign key user(id)
+}
+
+
+Table(device_type) {
+  primary(id) int
+  nnull(unique(name)) varchar[16]
+}
+
+Table(device) {
+  primary(id) int
+  nnull(type_id) int
+  nnull(house_id) int
+  nnull(modules_id) int
+  serial_number varchar[16]
+  nnull(unique(name)) varchar[16]
+  type_id foreign key device_type(id)
+  house_id foreign key house(id)
+  modules_id foreign key modules(id)
+}
+
+Table(modules) {
+  primary(id) int
+  nnull(unique(name)) varchar[16]
+}
+
+Table(telemetry_data) {
+  primary(id) int
+  nnull(device_id) int
+  nnull(data) bytea
+  ins timestamp default current_timestamp
+  device_id foreign key device(id)
+}
+
+user <-- house
+house <-- device
+device_type <-- device
+modules <-- device
+device <-- telemetry_data
+
+@enduml
