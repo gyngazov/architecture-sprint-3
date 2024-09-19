@@ -1,0 +1,14 @@
+@startuml
+
+title Управление Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container(vsrv, "Управление", "Сервис") {
+    Component(ctrl, "Контроллер", "POST/GET запросы от пользователя")
+    Component(lgc, "Обработчик", "Управляющая логика")
+    Component(prd, "DAO", "Обращения к бд")
+}
+@enduml

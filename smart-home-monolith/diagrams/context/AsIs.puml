@@ -1,5 +1,5 @@
 @startuml
-!include C4_Context.puml
+!include ../examples/C4_Context.puml
 
 !define OTOP Отопление
 title OTOP Context Diagram
