@@ -10,4 +10,5 @@ Container(vsrv, "Запросы", "Сервис") {
     Component(ctrl, "Контроллер", "GET запросы от пользователя")
     Component(prd, "DAO", "Обращения к бд")
 }
+Rel(ctrl, prd, "")
 @enduml

@@ -8,7 +8,11 @@ top to bottom direction
 
 Container(vsrv, "Управление", "Сервис") {
     Component(ctrl, "Контроллер", "POST/GET запросы от пользователя")
-    Component(lgc, "Обработчик", "Управляющая логика")
+    Component(log, "Обработчик", "Управляющая логика")
     Component(prd, "DAO", "Обращения к бд")
+    Component(cns, "Consumer", "Чтение KAFKA")
 }
+Rel(ctrl, log, "")
+Rel(log, prd, "")
+Rel(cns, log, "")
 @enduml
