@@ -1,0 +1,109 @@
+openapi: 3.0.3
+info:
+  title: Swagger Exhanger
+  description: swagger  для сервисов Телеметрии и Управления
+  version: 1.0.1
+servers:
+  - url: https://smart.home/index.html
+tags:
+  - name: device
+    description: отправка одного сообщения от телеметрии
+paths:
+  /devices/{device_id}/telemetry/latest:
+    post:
+      summary: Отправка json
+      tags: 
+      - device
+      description: Отправка данных с прибора
+      parameters:
+        - name: device_id
+          in: path
+          description: ид прибора в бд
+          required: true
+          schema:
+            type: integer
+          example:
+            '12034'
+      requestBody:
+        description: if isvideo, данные в поле video, иначе данные в поле temperature
+        content:
+            application/json:
+              schema:
+                properties:
+                  isvideo:
+                    type: boolean
+                    example: true
+                    default: true
+                  video:
+                    description: байты изображения с камеры в base64
+                    type: string
+                    example: 'Gsym...lzj4Tg=='
+                  temperature:
+                    description: температура по датчику
+                    type: number
+                    example: 23.45
+        required: true              
+      responses:
+        '201':
+          description: Успешное выполнение
+          headers:
+            Location: 
+              description: Адрес для загрузки файла
+              schema:
+                type: string
+        '200':
+          description: Успешное выполнение         
+          content:
+            application/json:
+              schema:
+                properties:
+                  size:
+                    description: Размер файла в байтах
+                    type: integer
+                    example:
+                      '123456'
+    get:
+      summary: Получить последнее состояние
+      tags: 
+      - device
+      description: Текущие данные с прибора
+      parameters:
+        - name: device_id
+          in: path
+          description: ид прибора в бд
+          required: true
+          schema:
+            type: integer
+          example: 12034
+      responses:
+        '200':
+          description: Успешно        
+          content:
+            application/json:
+              schema:
+                properties:
+                  isvideo:
+                    description: какой датчик описан
+                    type: boolean
+                    example: true
+                  video:
+                    description: байты изображения с камеры в base64
+                    type: string
+                    example: 'Gsym...lzj4Tg=='
+                  temperature:
+                    description: температура по датчику
+                    type: number
+                    example: 23.45
+                  date:
+                    description: дата данных
+                    type: string
+                    pattern: '202[4-9]\-[0-1][0-9]\-[0-3][0-9]'
+                    example: '2024-09-19'
+                  time:
+                    description: время сбора
+                    type: string
+                    pattern: '[0-2][0-9]:[0-5][0-9]'
+                    example: '12:34'             
+          
+          
+          
