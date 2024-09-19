@@ -7,16 +7,17 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Person(user, "Житель", "Пользователь системы")
-System(srvs, "Сервисы") {
-    Container(vsrv, "Видео", "Сервис")
-    Container(hsrv, "Тепло", "Сервис")
-    Container(coll, "Коллектор", "Consumer")
+System(tele, "Телеметрия") {
+    Container(vsrv, "Телеметрия", "Сервис")
+    Component(bdt, "Состояния устройств", "PostgreSQL")
+}
+System(srvs, "Управление") {
     Container(sys, "Управление", "Сервис")
     Container(qry, "Запросы", "Сервис")
+    Component(bd, "Настройки", "PostgreSQL")
 }
-Container(infr, "Персист") {
-    Component(bd, "Состояния и настройки", "PostgreSQL")
-    Component(kf, "Шина событий", "KAFKA")
+Container(infr, "Шина") {
+    Component(kf, "События", "KAFKA")
 }
 Container(gw, "Шлюз", "") {
     Component(igw, "API GW", "")
@@ -33,13 +34,12 @@ System_Ext(tp, "Элементы управления") {
 }
 
 
-Rel(kf, coll, "")
-Rel(coll, bd, "")
+Rel(kf, sys, "")
 Rel(dt1, gw, "Температура")
 Rel(dt2, gw, "Стрим")
-Rel(gw, hsrv, "Температура")
+Rel(gw, vsrv, "Температура")
 Rel(gw, vsrv, "Стрим")
-Rel(hsrv, kf, "")
+Rel(vsrv, bdt, "")
 Rel(vsrv, kf, "")
 Rel(user, gw, "Управление устройствами. Опрос датчиков")
 Rel(gw, tp4, "Вкл/Выкл")
