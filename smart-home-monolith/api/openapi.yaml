@@ -25,16 +25,12 @@ paths:
           example:
             '12034'
       requestBody:
-        description: if isvideo, данные в поле video, иначе данные в поле temperature
+        description: если stream пусто, то датчик температуры; если температура пусто, то стрим
         content:
             application/json:
               schema:
                 properties:
-                  isvideo:
-                    type: boolean
-                    example: true
-                    default: true
-                  video:
+                  stream:
                     description: байты изображения с камеры в base64
                     type: string
                     example: 'Gsym...lzj4Tg=='
@@ -45,23 +41,7 @@ paths:
         required: true              
       responses:
         '201':
-          description: Успешное выполнение
-          headers:
-            Location: 
-              description: Адрес для загрузки файла
-              schema:
-                type: string
-        '200':
-          description: Успешное выполнение         
-          content:
-            application/json:
-              schema:
-                properties:
-                  size:
-                    description: Размер файла в байтах
-                    type: integer
-                    example:
-                      '123456'
+          description: Сохранено
     get:
       summary: Получить последнее состояние
       tags: 

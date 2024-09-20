@@ -13,11 +13,7 @@ System(tele, "Телеметрия") {
 }
 System(srvs, "Управление") {
     Container(sys, "Управление", "Сервис")
-    Container(qry, "Запросы", "Сервис")
     Component(bd, "Настройки", "PostgreSQL")
-}
-Container(infr, "Шина") {
-    Component(kf, "События", "KAFKA")
 }
 Container(gw, "Шлюз", "") {
     Component(igw, "API GW", "")
@@ -34,22 +30,22 @@ System_Ext(tp, "Элементы управления") {
 }
 
 
-Rel(kf, sys, "")
+
 Rel(dt1, gw, "Температура")
 Rel(dt2, gw, "Стрим")
 Rel(gw, vsrv, "Температура")
 Rel(gw, vsrv, "Стрим")
 Rel(vsrv, bdt, "")
-Rel(vsrv, kf, "")
+
 Rel(user, gw, "Управление устройствами. Опрос датчиков")
 Rel(gw, tp4, "Вкл/Выкл")
 Rel(gw, tp3, "Вкл/Больше/Меньше")
 Rel(gw, tp2, "Поворот/Выкл")
 Rel(gw, tp1, "Открыть/Закрыть")
 Rel(gw, sys, "Управление")
-Rel(gw, qry, "Опросы")
 Rel(sys, bd, "")
-Rel(bd, qry, "")
+Rel(sys, vsrv, "Интеграция по справочникам")
+
 
 left footer
 1. Датчики отправляют показания как http/udp клиенты.

@@ -10,9 +10,9 @@ Container(vsrv, "Управление", "Сервис") {
     Component(ctrl, "Контроллер", "POST/GET запросы от пользователя")
     Component(log, "Обработчик", "Управляющая логика")
     Component(prd, "DAO", "Обращения к бд")
-    Component(cns, "Consumer", "Чтение KAFKA")
+    Component(cns, "Http client", "POST запрос в телеметрию")
 }
 Rel(ctrl, log, "")
 Rel(log, prd, "")
-Rel(cns, log, "")
+Rel(log, cns, "")
 @enduml
