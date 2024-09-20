@@ -67,3 +67,20 @@
 
 Развертывание:
 1. файл docker-compose.yaml
+
+Тесты:
+1. Регистрация устройства в сервисе управления
+Запрос:
+curl -X POST -H 'Content-Type: application/json' \
+-d '{"typeId":"1","houseId":"1","modulesId":"1","serialNumber":"CCFFXSXS-+t","name":"pup0-0"}' \
+localhost:8181/devices
+Результат:
+- устройство записано в бд сервиса управления 
+- устройство записано в бд сервиса телеметрии
+2. Регистрация события в телеметрии
+Запрос:
+curl -X POST -H 'Content-Type: application/json' \
+-d '{"stream": "DRF...67Y==", "temperature": ""}' \
+localhost:8080/devices/3/telemetry/latest
+Результат:
+- видео событие записано в бд сервиса телеметрии
