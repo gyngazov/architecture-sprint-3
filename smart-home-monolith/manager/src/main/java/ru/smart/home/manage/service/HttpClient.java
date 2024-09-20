@@ -20,6 +20,9 @@ public class HttpClient {
     private static final Logger logger = LoggerFactory.getLogger(HttpClient.class);
     private static final String DEV_PATH = "/devices/";
 
+    /**
+     * Слать json с данными нового прибора в сервис телеметрии.
+     */
     public ResponseEntity<Object> post(int deviceId, DeviceDto body) {
         RestTemplate rest = new RestTemplateBuilder()
                 .uriTemplateHandler(new DefaultUriBuilderFactory(telemetryUrl))

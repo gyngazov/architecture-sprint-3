@@ -18,12 +18,6 @@ public class DeviceController {
 
     private static final Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
-    /*@GetMapping("/{device_id}/telemetry/latest")
-    public ResponseEntity<HeatingSystemDto> getHeatingSystem(@PathVariable("id") Long id) {
-        logger.info("Fetching heating system with id {}", id);
-        return ResponseEntity.ok(heatingSystemService.getHeatingSystem(id));
-    }*/
-
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void setDevice(RequestEntity<DeviceDto> req) {

@@ -1,19 +1,21 @@
 openapi: 3.0.3
 info:
-  title: Swagger Exhanger
-  description: swagger  для сервисов Телеметрии и Управления
+  title: Умный Дом
+  description: Api  для сервисов Телеметрии и Управления
   version: 1.0.1
 servers:
   - url: https://smart.home/index.html
 tags:
+  - name: telemetry
+    description: обработка одного сообщения от телеметрии
   - name: device
-    description: отправка одного сообщения от телеметрии
+    description: регистрация устройства
 paths:
   /devices/{device_id}/telemetry/latest:
     post:
       summary: Отправка json
       tags: 
-      - device
+      - telemetry
       description: Отправка данных с прибора
       parameters:
         - name: device_id
@@ -22,8 +24,7 @@ paths:
           required: true
           schema:
             type: integer
-          example:
-            '12034'
+          example: 12034
       requestBody:
         description: если stream пусто, то датчик температуры; если температура пусто, то стрим
         content:
@@ -45,7 +46,7 @@ paths:
     get:
       summary: Получить последнее состояние
       tags: 
-      - device
+      - telemetry
       description: Текущие данные с прибора
       parameters:
         - name: device_id
@@ -83,7 +84,50 @@ paths:
                     description: время сбора
                     type: string
                     pattern: '[0-2][0-9]:[0-5][0-9]'
-                    example: '12:34'             
+                    example: '12:34'     
+  /devices/{device_id}:
+    post:
+      summary: Отправка данных о новом приборе
+      tags: 
+      - device
+      description: Сервис управления оповещает сервис телеметрии о новом приборе
+      parameters:
+        - name: device_id
+          in: path
+          description: id прибора в бд сервиса управления
+          required: true
+          schema:
+            type: integer
+          example: 12034
+      requestBody:
+        content:
+            application/json:
+              schema:
+                properties:
+                  typeId:
+                    description:
+                    type: integer
+                    example: 12
+                  houseId:
+                    description:
+                    type: integer
+                    example: 23
+                  modulesId:
+                    description:
+                    type: integer
+                    example: 34
+                  serialNumber:
+                    description:
+                    type: string
+                    example: 'DEF-03/s'
+                  name:
+                    description:
+                    type: string
+                    example: 'gate_7'
+        required: true              
+      responses:
+        '201':
+          description: Сохранено        
           
           
           
