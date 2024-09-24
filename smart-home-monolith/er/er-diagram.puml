@@ -54,10 +54,10 @@ Table(telemetry_data) {
   device_id foreign key device(id)
 }
 
-user <-- house
-house <-- device
-device_type <-- device
-modules <-- device
-device <-- telemetry_data
+user <-- house: имеет владельцем
+house <-- device: размещен в
+device_type <-- device: имеет тип
+modules <-- device: находится в составе
+device <-- telemetry_data: поступает от
 
 @enduml
