@@ -6,6 +6,8 @@ left header
 
 
 Опущены компоненты API GW и новые ноды микросервисов
+
+РО - результат обсчета модели
 end header
 top to bottom direction
 
@@ -50,12 +52,12 @@ Rel(mc, cl, "")
 Rel(sa, f, "")
 Rel(f, ca, "")
 Rel(f, mc, "")
-Rel(sa, t1, "")
+Rel(sa, t1, "Запрос\n обсчета")
 Rel(t1, mc, "")
-Rel(mc, t2, "")
-Rel(t2, sa, "")
-Rel(t2, ca, "")
-Rel(t2, ma, "")
+Rel(mc, t2, "РОМ")
+Rel(t2, sa, "РОМ")
+Rel(t2, ca, "РОМ")
+Rel(t2, ma, "РОМ")
 Rel(sa, t3, "")
 Rel(t3, ca, "")
 
