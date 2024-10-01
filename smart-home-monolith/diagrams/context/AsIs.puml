@@ -1,0 +1,29 @@
+@startuml
+!include ../examples/C4_Context.puml
+
+!define OTOP Отопление
+title OTOP Context Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Житель", "Пользователь системы")
+System(sys, OTOP, "Управление нагревом. Сбор данных.")
+
+System_Ext(dt1, "Датчик 1", "Термодатчик, кухня")
+System_Ext(dt2, "Датчик 2", "Термодатчик, гараж")
+System_Ext(tp1, "Нагреватель 1", "Кухня")
+System_Ext(tp2, "Нагреватель 2", "Гараж")
+
+Rel(user, sys, "Управляет отоплением. Наблюдает температуру.")
+Rel(dt1, sys, "Темп. кухня")
+Rel(dt2, sys, "Темп. гараж")
+Rel(sys, tp1, "Нагрев/охл.")
+Rel(sys, tp2, "Нагрев/охл.")
+
+left footer
+1. Датчики отправляют показания как http клиенты.
+2. Нагреватели получают настройки как http сервисы.
+end footer
+@enduml

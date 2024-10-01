@@ -1,0 +1,54 @@
+@startuml
+
+title УМНЫЙ ДОМ
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Житель", "Пользователь системы")
+System(tele, "Телеметрия") {
+    Container(vsrv, "Телеметрия", "Сервис")
+    Component(bdt, "Состояния устройств", "PostgreSQL")
+}
+System(srvs, "Управление") {
+    Container(sys, "Управление", "Сервис")
+    Component(bd, "Настройки", "PostgreSQL")
+}
+Container(gw, "Шлюз", "") {
+    Component(igw, "API GW", "")
+}
+System_Ext(dt, "Датчики") {
+    Container(dt1, "Тепло", "Термодатчики")
+    Container(dt2, "Видео", "Видеокамеры")
+}
+System_Ext(tp, "Элементы управления") {
+    Container(tp1, "Доступ", "Ворота")
+    Container(tp2, "Видеонаблюдение", "Камеры")
+    Container(tp3, "Отопление", "Термопары")
+    Container(tp4, "Освещение", "Лампы")
+}
+
+
+
+Rel(dt1, gw, "Температура")
+Rel(dt2, gw, "Стрим")
+Rel(gw, vsrv, "Температура")
+Rel(gw, vsrv, "Стрим")
+Rel(vsrv, bdt, "")
+
+Rel(user, gw, "Управление устройствами. Опрос датчиков")
+Rel(gw, tp4, "Вкл/Выкл")
+Rel(gw, tp3, "Вкл/Больше/Меньше")
+Rel(gw, tp2, "Поворот/Выкл")
+Rel(gw, tp1, "Открыть/Закрыть")
+Rel(gw, sys, "Управление")
+Rel(sys, bd, "")
+Rel(sys, vsrv, "Интеграция по справочникам")
+
+
+left footer
+1. Датчики отправляют показания как http/udp клиенты.
+2. Элементы управления получают настройки как http сервисы.
+end footer
+@enduml

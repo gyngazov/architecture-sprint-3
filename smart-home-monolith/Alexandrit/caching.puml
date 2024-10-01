@@ -1,0 +1,16 @@
+@startuml
+title АЛЕКСАНДРИТ \nWrite-Behind Cache
+autonumber
+
+OPR -> CACHE: hit
+CACHE -> CACHE: update
+CACHE --> OPR: reply
+CACHE -> BD: async
+
+OPR -> CACHE: miss
+CACHE -> BD: sync
+BD --> CACHE: reply
+CACHE -> CACHE: update
+CACHE --> OPR: reply
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+title Видео Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container(vsrv, "Телеметрия", "Сервис") {
+    Component(ctrl, "Контроллер", "POST поток от камер")
+    Component(log, "Обработчик", "Логика")
+    Component(dao, "DAO", "Запись в бд")
+}
+Rel(ctrl, log, "")
+Rel(log, dao, "")
+@enduml

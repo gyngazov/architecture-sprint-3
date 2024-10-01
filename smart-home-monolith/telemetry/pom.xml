@@ -3,21 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.yandex.practicum</groupId>
-    <artifactId>smart-home-monolith</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>telemetry</module>
-        <module>manager</module>
-    </modules>
-    <packaging>pom</packaging>
-
-    <name>smart-home-monolith</name>
+    <artifactId>telemetry</artifactId>
+    <version>1.0</version>
+    <name>telemetry</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
@@ -25,10 +19,11 @@
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <lombok.version>1.18.34</lombok.version>
         <testcontainers.version>1.20.1</testcontainers.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -37,37 +32,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
-        <!-- Database -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-<!--        &lt;!&ndash; Swagger &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>${springfox-swagger.version}</version>-->
-<!--        </dependency>-->
-
-        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

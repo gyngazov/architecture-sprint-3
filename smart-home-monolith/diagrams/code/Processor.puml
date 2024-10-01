@@ -1,0 +1,53 @@
+@startuml
+title Processor Code Diagram
+' Обработчик службы управления
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class Gate {
+  +String name
+  +boolean isClosed
+  +LocalDateTime since
+}
+
+class AccessService {
+  +void open(Gate)
+  +void close(Gate)
+  +boolean isClosed(Gate)
+}
+
+class Camera {
+  +String name
+  +boolean isActive
+  +Location location
+  +Direction direction
+}
+
+class VideoService {
+  +void on(Camera)
+  +void off(Camera)
+  +void rotate(Direction)
+  +Show show(Camera, LocalDateTime, LocalDateTime)
+}
+
+class VideoDAO {
+  +int insert(Camera, byte[])
+  +byte[] find(Camera, LocalDateTime, LocalDateTime)
+  +List<Camera> find(Location, LocalDateTime, LocalDateTime)
+}
+
+class AccessDAO {
+  +void insert(Gate, boolean)
+  +Gate find(boolean)
+  +List<Gate> find(LocalDateTime, LocalDateTime)
+}
+
+
+Gate <-- AccessService
+AccessService <-- AccessDAO
+VideoService <-- VideoDAO
+Camera <-- VideoService
+
+@enduml

@@ -1,0 +1,64 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title АЛЕКСАНДРИТ JSS
+left header
+
+
+Опущены компоненты API GW и новые ноды микросервисов
+
+РО - результат обсчета модели
+end header
+top to bottom direction
+
+
+
+Person(cus, "Customer", "Потребитель")
+Person(sel, "Seller", "Продавцы")
+Person(api, "API user", "")
+Person(opr, "Operator", "Производство")
+
+System_Ext(jss, "Jewelry Store System") {
+    Container(s, "SHOP", "")
+    Container(sa, "SHOP API", "")
+    Container(sd, "SHOP DB", "")
+    Container(c, "CRM", "")
+    Container(ca, "CRM API", "")
+    Container(cd, "CRM DB", "")
+    Container(m, "MES", "")
+    Container(ma, "MES API", "")
+    Container(md, "MES DB", "")
+    Container(mc, "MES CALC", "")
+    Container(cl, "CALC DB", "")
+    Container(f, "3FS", "")
+    Container(rmq, "RMQ", "")
+}
+Container(rmq, "RMQ", "") {
+    Component(t1, "TASK", "Топик")
+    Component(t2, "RESP", "Топик")
+    Component(t3, "MIGRATE", "Топик")
+}
+Rel(cus, s, "")
+Rel(s, sa, "")
+Rel(sa, sd, "")
+Rel(sel, c, "")
+Rel(c, ca, "")
+Rel(ca, cd, "")
+Rel(opr, m, "")
+Rel(m, ma, "")
+Rel(ma, md, "")
+Rel(api, ma, "")
+Rel(mc, cl, "")
+Rel(sa, f, "")
+Rel(f, ca, "")
+Rel(f, mc, "")
+Rel(sa, t1, "Запрос\n обсчета")
+Rel(t1, mc, "")
+Rel(mc, t2, "РОМ")
+Rel(t2, sa, "РОМ")
+Rel(t2, ca, "РОМ")
+Rel(t2, ma, "РОМ")
+Rel(sa, t3, "")
+Rel(t3, ca, "")
+
+@enduml

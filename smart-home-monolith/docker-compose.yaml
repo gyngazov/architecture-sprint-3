@@ -1,0 +1,40 @@
+services:
+  dbm:
+    image: postgres:13
+    container_name: dbm
+    environment:
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: smarthomeman
+    ports:
+      - "5432:5432"
+
+  dbt:
+    image: postgres:13
+    container_name: dbt
+    environment:
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: smarthometel
+    ports:
+      - "5423:5432"
+
+  tel:
+    build:
+      context: telemetry
+    image: tel
+    container_name: tel
+    ports:
+      - "8080:8080"
+    depends_on:
+    - dbt
+
+  man:
+    build:
+      context: manager
+    image: man
+    container_name: man
+    ports:
+      - "8181:8181"
+    depends_on:
+    - dbm

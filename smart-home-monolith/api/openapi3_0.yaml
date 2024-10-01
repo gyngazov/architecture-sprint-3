@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Умный Дом
+  description: Api  для сервисов Телеметрии и Управления
+  version: 1.0.1
+servers:
+  - url: https://smart.home/index.html
+tags:
+  - name: telemetry
+    description: обработка одного сообщения от телеметрии
+  - name: device
+    description: регистрация устройства
+paths:
+  /devices/{device_id}/telemetry/latest:
+    post:
+      summary: Отправка json
+      tags: 
+      - telemetry
+      description: Отправка данных с прибора
+      parameters:
+        - name: device_id
+          in: path
+          description: ид прибора в бд
+          required: true
+          schema:
+            type: integer
+          example: 12034
+      requestBody:
+        description: если stream пусто, то датчик температуры; если температура пусто, то стрим
+        content:
+            application/json:
+              schema:
+                properties:
+                  stream:
+                    description: байты изображения с камеры в base64
+                    type: string
+                    example: 'Gsym...lzj4Tg=='
+                  temperature:
+                    description: температура по датчику
+                    type: number
+                    example: 23.45
+        required: true              
+      responses:
+        '201':
+          description: Сохранено
+    get:
+      summary: Получить последнее состояние
+      tags: 
+      - telemetry
+      description: Текущие данные с прибора
+      parameters:
+        - name: device_id
+          in: path
+          description: ид прибора в бд
+          required: true
+          schema:
+            type: integer
+          example: 12034
+      responses:
+        '200':
+          description: Успешно        
+          content:
+            application/json:
+              schema:
+                properties:
+                  isvideo:
+                    description: какой датчик описан
+                    type: boolean
+                    example: true
+                  video:
+                    description: байты изображения с камеры в base64
+                    type: string
+                    example: 'Gsym...lzj4Tg=='
+                  temperature:
+                    description: температура по датчику
+                    type: number
+                    example: 23.45
+                  date:
+                    description: дата данных
+                    type: string
+                    pattern: '202[4-9]\-[0-1][0-9]\-[0-3][0-9]'
+                    example: '2024-09-19'
+                  time:
+                    description: время сбора
+                    type: string
+                    pattern: '[0-2][0-9]:[0-5][0-9]'
+                    example: '12:34'     
+  /devices/{device_id}:
+    post:
+      summary: Отправка данных о новом приборе
+      tags: 
+      - device
+      description: Сервис управления оповещает сервис телеметрии о новом приборе
+      parameters:
+        - name: device_id
+          in: path
+          description: id прибора в бд сервиса управления
+          required: true
+          schema:
+            type: integer
+          example: 12034
+      requestBody:
+        content:
+            application/json:
+              schema:
+                properties:
+                  typeId:
+                    description:
+                    type: integer
+                    example: 12
+                  houseId:
+                    description:
+                    type: integer
+                    example: 23
+                  modulesId:
+                    description:
+                    type: integer
+                    example: 34
+                  serialNumber:
+                    description:
+                    type: string
+                    example: 'DEF-03/s'
+                  name:
+                    description:
+                    type: string
+                    example: 'gate_7'
+        required: true              
+      responses:
+        '201':
+          description: Сохранено        
+          
+          
+          
